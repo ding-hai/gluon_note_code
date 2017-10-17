@@ -2,7 +2,7 @@
 from mxnet import ndarray as nd
 from mxnet import autograd as ag
 from mxnet import gluon
-from utils import SGD,load_data_fashion_mnist,evaluate_accuracy,accuracy
+from utils import SGD,load_data_fashion_mnist,evaluate_accuracy,accuracy,Result
 
 import matplotlib.pyplot as plt
 # 定义参数
@@ -52,11 +52,9 @@ def cross_entropy(yhat,y):
 for param in params:
     param.attach_grad()
 
-train_loss_list=[]
-train_acc_list = []
-test_acc_list=[]
+result = Result()
+num_batchs = len(train_data)
 for epoch in range(10):
-    num_batchs = len(train_data)
     train_loss = 0.0
     train_acc = 0.0
     for data,label in train_data:
@@ -69,14 +67,8 @@ for epoch in range(10):
         train_acc+= accuracy(output,label)
 
     test_acc = evaluate_accuracy(test_data,net)
-    train_loss_list.append(train_loss/num_batchs)
-    test_acc_list.append(test_acc)
-    train_acc_list.append(train_acc/num_batchs)
+    result.add("train_loss",train_loss/num_batchs)
+    result.add("test_acc",test_acc)
+    result.add("train_acc",train_acc/num_batchs)
     print("Epoch %d: train_loss = %f train_acc = %f test_acc = %f "%(epoch,train_loss/num_batchs,train_acc/num_batchs,test_acc))
-
-ax = plt.subplot(111)
-ax.plot(list(range(len(train_loss_list))),train_loss_list,color='r',label="train_loss")
-ax.plot(list(range(len(train_loss_list))),train_acc_list,color='g',label="train_acc")
-ax.plot(list(range(len(train_loss_list))),test_acc_list,color='b',label="test_acc")
-ax.legend(loc=1,ncol=3,shadow=True)
-plt.show()
+result.show()

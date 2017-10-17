@@ -44,6 +44,7 @@ def cross_entropy(yhat,y):
 #     return acc / len(data_iterator)
 
 #train
+num_batchs = len(train_data)
 for epoch in range(5):
     train_loss = 0.
     train_acc = 0.
@@ -59,7 +60,7 @@ for epoch in range(5):
     test_acc = evaluate_accuracy(test_data, net)
 
     print("Epoch %d. Loss: %f, Train acc %f, Test acc %f" % (
-        epoch, train_loss/len(train_data), train_acc/len(train_data), test_acc))
+        epoch, train_loss/num_batchs, train_acc/num_batchs, test_acc))
 
 
 

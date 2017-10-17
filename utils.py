@@ -1,6 +1,7 @@
 #conding:utf8
 from mxnet import gluon
 from mxnet import ndarray as nd
+import matplotlib.pyplot as plt
 def SGD(params,lr):
     for param in params:
         param[:] = param - lr*param.grad
@@ -33,3 +34,27 @@ def evaluate_accuracy(data_iterator,net):
         output = net(data)
         total_acc+=accuracy(output,label)
     return total_acc/len(data_iterator)
+
+def softmax(X):
+    exp = nd.exp(X)
+    partition = exp.sum(axis=1,keepdims=True)
+    return exp/partition
+
+class Result(object):
+    def __init__(self):
+        self.result_map = {"train_loss":[],"train_acc":[],"test_acc":[]}
+
+    def add(self,key,value):
+        self.result_map[key].append(value)
+
+    def show(self):
+        ax = plt.subplot(111)
+        train_loss_list = self.result_map.get("train_loss",[])
+        train_acc_list = self.result_map.get("train_acc",[])
+        test_acc_list = self.result_map.get("test_acc",[])
+
+        ax.plot(list(range(len(train_loss_list))),train_loss_list,color='r',label="train_loss")
+        ax.plot(list(range(len(train_loss_list))),train_acc_list,color='g',label="train_acc")
+        ax.plot(list(range(len(train_loss_list))),test_acc_list,color='b',label="test_acc")
+        ax.legend(loc=1,ncol=3,shadow=True)
+        plt.show()

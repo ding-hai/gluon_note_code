@@ -26,8 +26,8 @@ softmax_cross_entropy = gluon.loss.SoftmaxCrossEntropyLoss()
 
 #训练
 trainer = gluon.Trainer(net.collect_params(),'sgd',{"learning_rate":learning_rate})
+num_batchs = len(train_data)
 for epoch in range(10):
-    num_batchs = len(train_data)
     train_loss = 0
     train_acc = 0
     for data,label in train_data:
