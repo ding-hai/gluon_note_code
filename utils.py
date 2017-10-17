@@ -41,8 +41,11 @@ def softmax(X):
     return exp/partition
 
 class Result(object):
-    def __init__(self):
-        self.result_map = {"train_loss":[],"train_acc":[],"test_acc":[]}
+    def __init__(self,result_map=None):
+        if not result_map:
+            self.result_map = {"train_loss":[],"train_acc":[],"test_acc":[]}
+        else:
+            self.result_map = result_map
 
     def add(self,key,value):
         self.result_map[key].append(value)
