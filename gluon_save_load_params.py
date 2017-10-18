@@ -42,7 +42,7 @@ softmax_cross_entropy = gluon.loss.SoftmaxCrossEntropyLoss()
 #训练
 trainer = gluon.Trainer(net.collect_params(),'sgd',{"learning_rate":learning_rate})
 if os.path.isfile("./net_params.params"):
-    net.load_params(net_params.params,mx.cpu())
+    net.load_params("net_params.params",mx.cpu())
     test_acc = evaluate_accuracy(test_data,net)
     print("测试精度",test_acc)
 else:
