@@ -1,7 +1,10 @@
 #conding:utf8
 from mxnet import gluon
 from mxnet import ndarray as nd
-import matplotlib.pyplot as plt
+try:
+    import matplotlib.pyplot as plt
+except:
+    plt = None
 def SGD(params,lr):
     for param in params:
         param[:] = param - lr*param.grad
