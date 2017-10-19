@@ -3,9 +3,9 @@ import mxnet as mx
 from mxnet import gluon
 from mxnet import ndarray as nd
 from mxnet import autograd as ag
-from utils import load_data_fashion_mnist,accuracy,evaluate_accuracy
+from utils import load_data_fashion_mnist,accuracy,evaluate_accuracy,Result
 
-import os
+import os,json
 
 
 #超参数
@@ -46,7 +46,8 @@ if os.path.isfile("./net_params.params"):
     test_acc = evaluate_accuracy(test_data,net)
     print("测试精度",test_acc)
 else:
-    for epoch in range(5):
+    result = Result()
+    for epoch in range(1000):
         train_loss = .0
         train_acc = .0
         num_batchs = len(train_data)
@@ -59,5 +60,10 @@ else:
             train_loss += nd.mean(loss).asscalar()
             train_acc += accuracy(output,label)
         test_acc = evaluate_accuracy(test_data,net)
+        result.add("train_loss",train_loss/num_batchs)
+        result.add("train_acc",train_acc/num_batchs)
+        result.add("test_acc",test_acc)
         print("Epoch:%d train_loss:%f, train_acc:%f, test_acc:%f"%(epoch,train_loss/num_batchs,train_acc/num_batchs,test_acc))
     net.save_params("./net_params.params")
+    with open("./result_map.json",'w')  as file:
+        json.dump(result.result_map,file)
