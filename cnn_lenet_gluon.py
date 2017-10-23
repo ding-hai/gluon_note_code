@@ -4,6 +4,7 @@ from mxnet import ndarray as nd
 from mxnet import autograd as ag
 from utils import load_data_fashion_mnist,accuracy,Result
 import mxnet as mx
+import json
 ctx =mx.cpu()
 
 
