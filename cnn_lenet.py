@@ -62,7 +62,7 @@ def net(data,verbose=False):
         print("conv_1 out shape:",h1_pool.shape)
         print("conv_2 out shape:",h2_pool.shape)
         print("full conect 1 out shape:",h3_activation.shape)
-        print("full connect 2 out shape:",h4_activation.shape)
+        print("full connect 2 out shape:",h4_linar.shape)
     return h4_linar#h4_activation
 
 

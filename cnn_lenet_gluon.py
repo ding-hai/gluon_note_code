@@ -8,13 +8,6 @@ import json
 ctx =mx.cpu()
 
 
-def evaluate_accuracy(data_iterator,net):
-    total_acc =0.0
-    for data,label in data_iterator:
-        data = data.reshape((-1,1,28,28))
-        output = net(data)
-        total_acc+=accuracy(output,label)
-    return total_acc/len(data_iterator)
 
 
 #超参数
@@ -27,6 +20,14 @@ weight_scale = .01
 #加载数据
 train_data,test_data = load_data_fashion_mnist(batch_size)
 
+
+def evaluate_accuracy(data_iterator,net):
+    total_acc =0.0
+    for data,label in data_iterator:
+        data = data.reshape((-1,1,28,28))
+        output = net(data)
+        total_acc+=accuracy(output,label)
+    return total_acc/len(data_iterator)
 
 #搭建模型
 net = gluon.nn.Sequential()

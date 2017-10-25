@@ -1,5 +1,6 @@
 #conding:utf8
 from mxnet import gluon
+from mxnet import image
 from mxnet import ndarray as nd
 try:
     import matplotlib.pyplot as plt
@@ -14,10 +15,12 @@ def data_transform(data,label):
     return data.astype('float32')/255,label.astype('float32')
 
 #加载数据
-def data_transform(data,label):
-    return data.astype('float32')/255,label.astype('float32')
+def load_data_fashion_mnist(batch_size,resize=None):
 
-def load_data_fashion_mnist(batch_size):
+    def data_transform(data,label):
+        if resize:
+            data  = image.imresize(data,resize,resize)
+        return data.astype('float32')/255,label.astype('float32')
     mnist_train = gluon.data.vision.FashionMNIST(train=True,transform=data_transform)
     mnist_test = gluon.data.vision.FashionMNIST(train=False,transform=data_transform)
 
