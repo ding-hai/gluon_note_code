@@ -13,6 +13,7 @@ learning_rate = 0.01
 train_data,test_data = load_data_fashion_mnist(batch_size,resize)
 
 
+
 def evaluate_accuracy(data_iterator,net):
     total_acc =0.0
     for data,label in data_iterator:
